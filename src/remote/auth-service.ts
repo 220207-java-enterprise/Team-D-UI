@@ -2,8 +2,9 @@ import { Principal } from "../models/principal";
 import { appClient } from "./app-client";
 
 export const authenticate = async(credentials:{username:string, password:string})=>{
+    // axios will return a Principal object 
     return await appClient.post<Principal>('/auth', credentials,
-        {headers:{'Content-Type':'application/json'}
+        {headers:{'Content-Type':'application/json'},
     });
 }
 

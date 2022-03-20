@@ -28,12 +28,13 @@ function LoginForm(props: ILoginProps) {
 
         try{
             let res = await authenticate({username, password});
-            console.log(res)
+            console.log(res.data)
             if (res.status === 400) {
                 setErrorMsg('Invalid username or password provided!');
             }
 
             if (res.status === 401) {
+                // how to get res.data.message??
                 setErrorMsg('No user found with provided credentials!');
             }
 
