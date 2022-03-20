@@ -23,50 +23,73 @@ function LoginForm(props: ILoginProps) {
     let updatePassword =(e:SyntheticEvent)=>{
         setPassword((e.target as HTMLInputElement).value);
     }
+    const submitHandler= async (e:SyntheticEvent)=>{
+        e.preventDefault();
 
-    const handleLogin = async ()=>{
         try{
-            let resp = await authenticate({username, password});
-            
-            if (resp.status === 400) {
+            let res = await authenticate({username, password});
+            console.log(res)
+            if (res.status === 400) {
                 setErrorMsg('Invalid username or password provided!');
             }
 
-            if (resp.status === 401) {
+            if (res.status === 401) {
                 setErrorMsg('No user found with provided credentials!');
             }
 
-            if (resp.status === 201) {
-                let authUser = await resp.data;
+
+            if (res.status === 201) {
+                let authUser = await res.data;
                 console.log(authUser);
                 props.setCurrentUser(authUser);
                 navigate('/dashboard');
             }
 
         }catch(e:any){
-            console.log(e.message);
+            console.log(e);
         }
     }
 
     return (
-        <div className="text-center">
-            <h1>Weclome to the Login Page</h1>
+        <div className="background">
+        <h1 className="page-heading pt-5">Login Form</h1>
+        <form
+            className="container d-flex justify-content-around"
+            onSubmit={submitHandler}
+        >
 
-            <div className="form-signin">
-                <label>Username: </label>
-                <input type="text" id="username"  placeholder="Username" 
-                    onChange={updateUsername}
-                /><br/>
+            <div className="justify-content-center">
+                <div className="form-group m-3">
+                    <input 
+                        name="username"
+                        type="text" 
+                        required
+                        value={username}
+                        placeholder="enter username..." 
+                        className="form-control" 
+                        onChange={updateUsername}
+                    />
+                </div>
 
-                <label>Password: </label>
-                <input type="text" id="password"  placeholder="Password" 
-                    onChange={updatePassword}
-                /><br/>
+                <div className="form-group m-3">
+                    <input
+                        name="password" 
+                        type="text" 
+                        required 
+                        value={password}
+                        placeholder="enter password..." 
+                        className="form-control" 
+                        onChange={updatePassword}
+                    />
+                </div>
 
-                <button className="btn btn-primary" type="submit" id="login-button" onClick={handleLogin} >
-                    Login
-                </button>
-            </div>
+                <input 
+                    className="btn-lg btn-primary" 
+                    type="submit"
+                    value="Login"
+                />
+            </div>                
+        </form>
 
             <Link to="/register">Not a member? Register Here.</Link>
             <br/>
