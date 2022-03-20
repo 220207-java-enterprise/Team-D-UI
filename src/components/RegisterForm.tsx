@@ -15,7 +15,7 @@ function RegisterForm() {
         surname:"",
         password:"",
         role:"EMPLOYEE",
-    })
+    });
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -25,7 +25,7 @@ function RegisterForm() {
         setFormInfo({
             ...formInfo,
             [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
-        })
+        });
 
         console.log(formInfo);
     }
@@ -140,7 +140,7 @@ function RegisterForm() {
                 />
             </div>                
         </form>
-        <Link to="/">Already a member? Sign in.</Link>
+        <Link to="/login">Already a member? Sign in.</Link>
 
         {errorMsg? <ErrorMessage errorMessage={errorMsg}/> : <></>}
       </div>
