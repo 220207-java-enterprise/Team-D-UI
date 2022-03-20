@@ -1,6 +1,7 @@
 import React, {SyntheticEvent, useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { Principal } from "../models/principal";
+import { appClient } from "../remote/app-client";
 import { authenticate } from "../remote/auth-service";
 import ErrorMessage from "./ErrorMessage";
 
@@ -23,32 +24,24 @@ function LoginForm(props: ILoginProps) {
     let updatePassword =(e:SyntheticEvent)=>{
         setPassword((e.target as HTMLInputElement).value);
     }
-    const submitHandler= async (e:SyntheticEvent)=>{
+    const submitHandler= (e:SyntheticEvent)=>{
         e.preventDefault();
+        appClient
+            .post("/auth", {username, password}, { headers: { 'Content-Type' : 'application/json' }})
+            .then((res) => {
+                if (res.data.status===400 || res.data.status===401){
+                    console.log(res.data);
+                    setErrorMsg(res.data.message);
+                } else{
+                    console.log(res.data);
+                    props.setCurrentUser(res.data);
+                    navigate("/dashboard")
+                }
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
 
-        try{
-            let res = await authenticate({username, password});
-            console.log(res.data)
-            if (res.status === 400) {
-                setErrorMsg('Invalid username or password provided!');
-            }
-
-            if (res.status === 401) {
-                // how to get res.data.message??
-                setErrorMsg('No user found with provided credentials!');
-            }
-
-
-            if (res.status === 201) {
-                let authUser = await res.data;
-                console.log(authUser);
-                props.setCurrentUser(authUser);
-                navigate('/dashboard');
-            }
-
-        }catch(e:any){
-            console.log(e);
-        }
     }
 
     return (
