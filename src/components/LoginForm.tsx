@@ -9,7 +9,7 @@ interface ILoginProps{
     setCurrentUser: (nextUser: Principal | undefined) => void
 }
 
-function Login(props: ILoginProps) {
+function LoginForm(props: ILoginProps) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -75,4 +75,4 @@ function Login(props: ILoginProps) {
     );
 }
 
-export default Login;
+export default LoginForm;
