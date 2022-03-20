@@ -1,0 +1,14 @@
+ .background {
+    background-color: #111;
+    height: 1000px;
+}
+
+.page-heading{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 100px;
+    color: whitesmoke;
+}
+
+.white-text{
+    color:whitesmoke;
+}

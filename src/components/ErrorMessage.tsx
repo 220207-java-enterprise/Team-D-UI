@@ -3,7 +3,7 @@ interface IErrorMessage {
 }
 
 function ErrorMessage(props: IErrorMessage) {
-    return (<p className="alert">{props.errorMessage}</p>)
+    return (<p className="text-danger">{props.errorMessage}</p>)
 }
 
 export default ErrorMessage;
