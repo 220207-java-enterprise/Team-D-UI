@@ -30,8 +30,8 @@ function DataGridforAdmin(props: IDataGridProps){
         authAxios
             .get("/users")
             .then((res)=> {
-            console.log(res);
-            setData(res.data);
+            console.log(res.data.providedValues);
+            setData(res.data.providedValues);
             })
             .catch((err)=>{
                 console.log(err);
@@ -41,31 +41,36 @@ function DataGridforAdmin(props: IDataGridProps){
     useEffect(()=> {
         getUserData();
     }, [])
-    
+
     const columns = [
-        {field: "user_id", headerName:"ID", width:90},
-        {field: "given_name", headerName:"First Name", width:90},
-        {field: "surname", headerName:"Last Name", width:90},
-        {field: "email", headerName:"Email", width:90},
-        {field: "active", headerName:"Is Active?", width:90},   
+        {field: "userId", headerName:"ID", width:90},
+        {field: "firstName", headerName:"First Name", width:90},
+        {field: "lastName", headerName:"Last Name", width:90},
+        {field: "email", headerName:"Email", width:180},
+        {field: "isActive", headerName:"Is Active?", width:90},
+        {field: "role", headerName:"Role", width:180}
     ]
 
-    // const rows = data.map((row=> ({
-    //     userId: row["user_id"],
-    //     firstName: row["given_name"],
-    //     lastName: row["surname"],
-    //     email: row["email"],
-    //     isActive: row["active"]
-    // })));
+    const rows = data.map((row=> ({
+        userId: row["user_id"],
+        firstName: row["given_name"],
+        lastName: row["surname"],
+        email: row["email"],
+        isActive: row["active"],
+        role: row["role"]
+    })));
                         
     return (
-        <div style={{height: "500px"}}>
-            {/* <DataGrid 
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-            /> */}
+        <div className='white-text' style={{height: "500px"}}> All Users
+            {
+                <DataGrid 
+                    getRowId={(row) => row.userId}
+                    rows={rows}
+                    columns={columns}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                />
+            }
         </div>
     )
 }
