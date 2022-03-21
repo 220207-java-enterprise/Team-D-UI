@@ -1,9 +1,8 @@
 import React, {SyntheticEvent, useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { Principal } from "../models/principal";
-import { appClient } from "../remote/app-client";
-import { authenticate } from "../remote/auth-service";
 import ErrorMessage from "./ErrorMessage";
+import axios from "axios";
 
 interface ILoginProps{
     currentUser: Principal | undefined,
@@ -12,36 +11,56 @@ interface ILoginProps{
 
 function LoginForm(props: ILoginProps) {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [formInfo, setFormInfo] = useState({
+        username:"",
+        password:"",
+    });
+
     const [errorMsg, setErrorMsg] = useState('');
 
     const navigate = useNavigate();
 
-    let updateUsername =(e:SyntheticEvent)=>{
-        setUsername((e.target as HTMLInputElement).value);
+    const changeHandler = (e:SyntheticEvent) =>{
+        setFormInfo({
+            ...formInfo,
+            [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
+        });
+
+        console.log(formInfo);
     }
-    let updatePassword =(e:SyntheticEvent)=>{
-        setPassword((e.target as HTMLInputElement).value);
-    }
+
+    // TODO use this axios to send tokens
+    const authAxios = axios.create({
+        baseURL: 'http://localhost:8080/technology-project',
+        headers:{
+            'Accept':'application/json',
+            'Authorization': `${props.currentUser?.token}`
+        },
+        //prevents Axios from throwing an error if the response status is anything other than 200-900
+        validateStatus:() => true
+    })
+
     const submitHandler= (e:SyntheticEvent)=>{
         e.preventDefault();
-        appClient
-            .post("/auth", {username, password}, { headers: { 'Content-Type' : 'application/json' }})
+        authAxios
+            .post("/auth", formInfo)
             .then((res) => {
                 if (res.data.status===400 || res.data.status===401){
                     console.log(res.data);
                     setErrorMsg(res.data.message);
-                } else{
-                    console.log(res.data);
-                    props.setCurrentUser(res.data);
-                    navigate("/dashboard")
-                }
+                } 
+
+                // store token to local storage
+                window.localStorage.setItem("token", res.headers["authorization"]);
+                // add token to Principal object
+                const authUser = {...res.data, token:res.headers["authorization"]};
+                props.setCurrentUser(authUser);
+                navigate("/dashboard");
+
             })
             .catch((err)=>{
                 console.log(err);
             });
-
     }
 
     return (
@@ -58,10 +77,10 @@ function LoginForm(props: ILoginProps) {
                         name="username"
                         type="text" 
                         required
-                        value={username}
+                        value={formInfo.username}
                         placeholder="enter username..." 
                         className="form-control" 
-                        onChange={updateUsername}
+                        onChange={changeHandler}
                     />
                 </div>
 
@@ -70,10 +89,10 @@ function LoginForm(props: ILoginProps) {
                         name="password" 
                         type="text" 
                         required 
-                        value={password}
+                        value={formInfo.password}
                         placeholder="enter password..." 
                         className="form-control" 
-                        onChange={updatePassword}
+                        onChange={changeHandler}
                     />
                 </div>
 
