@@ -3,6 +3,7 @@ import {DataGrid} from '@mui/x-data-grid';
 import axios from 'axios';
 import { Principal } from '../models/principal';
 import { appClient } from '../remote/app-client';
+import { createStyles, makeStyles } from '@mui/material';
 
 interface IDataGridProps{
     authUser : Principal | undefined,
@@ -43,12 +44,12 @@ function DataGridforAdmin(props: IDataGridProps){
     }, [])
 
     const columns = [
-        {field: "userId", headerName:"ID", width:90},
-        {field: "firstName", headerName:"First Name", width:90},
-        {field: "lastName", headerName:"Last Name", width:90},
-        {field: "email", headerName:"Email", width:180},
-        {field: "isActive", headerName:"Is Active?", width:90},
-        {field: "role", headerName:"Role", width:180}
+        {field: "userId", headerName:"ID", width:100},
+        {field: "firstName", headerName:"First Name", width:200},
+        {field: "lastName", headerName:"Last Name", width:200},
+        {field: "email", headerName:"Email", width:200},
+        {field: "isActive", headerName:"Is Active?", width:100},
+        {field: "role", headerName:"Role", width:180},
     ]
 
     const rows = data.map((row=> ({
@@ -61,14 +62,25 @@ function DataGridforAdmin(props: IDataGridProps){
     })));
                         
     return (
-        <div className='white-text' style={{height: "500px"}}> All Users
+        <div className='white-text container' style={{height: "500px"}}> All Users
             {
-                <DataGrid 
+                <DataGrid
+                    sx={{
+                        width: '100%',
+                        color:'whitesmoke',
+                        display:'in-line',
+                        justifyContent:'space-between',
+                        borderRadius: 2,
+                        boxShadow: 2,
+                        border: 2,
+                        borderColor: 'primary.light', '& .MuiDataGrid-cell:hover': {color: 'primary.light',},
+                    }}
                     getRowId={(row) => row.userId}
                     rows={rows}
                     columns={columns}
-                    pageSize={10}
+                    pageSize={5}
                     rowsPerPageOptions={[10]}
+                    
                 />
             }
         </div>
