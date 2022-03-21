@@ -62,25 +62,27 @@ function DataGridforAdmin(props: IDataGridProps){
     })));
                         
     return (
-        <div className='white-text container' style={{height: "500px"}}> All Users
+        <div className='white-text container' /*style={{height: "500px"}}*/> All Users
             {
                 <DataGrid
                     sx={{
                         width: '100%',
-                        color:'whitesmoke',
+                        color:'black',
+                        backgroundColor: 'whitesmoke',
                         display:'in-line',
                         justifyContent:'space-between',
                         borderRadius: 2,
                         boxShadow: 2,
                         border: 2,
-                        borderColor: 'primary.light', '& .MuiDataGrid-cell:hover': {color: 'primary.light',},
+                        borderColor: 'whitesmoke', '& .MuiDataGrid-cell:hover': {color: 'purple',},
                     }}
                     getRowId={(row) => row.userId}
                     rows={rows}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[10]}
-                    
+                    autoHeight={true}
+                    paginationMode='client'
                 />
             }
         </div>
