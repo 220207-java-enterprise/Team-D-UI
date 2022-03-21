@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Principal } from '../models/principal';
 import '../styles/styles.css'
-import DataGridforAdmin from './DataGrid';
+import DataGridforAdmin from './DataGridAdmin';
 import ErrorMessage from "./ErrorMessage";
 import {logout} from "../remote/auth-service"
 
@@ -12,7 +12,9 @@ interface IDashboardProps{
 function Dashboard(props: IDashboardProps){
     let [authUser, setAuthUser] = useState<Principal>();
 
-    console.log(authUser);
+    console.log(props.currentUser);
+
+    
     
     return(
         !props.currentUser ? <>Login Required!</> :
@@ -24,7 +26,7 @@ function Dashboard(props: IDashboardProps){
                 <p>{props.currentUser.token}</p>
             </div>
             {props.currentUser.role === "ADMIN"?
-                <DataGridforAdmin authUser={authUser}></DataGridforAdmin>
+                <DataGridforAdmin authUser={props.currentUser}></DataGridforAdmin>
                 : ""
             }
         </div>

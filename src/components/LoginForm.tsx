@@ -29,12 +29,11 @@ function LoginForm(props: ILoginProps) {
         console.log(formInfo);
     }
 
-    // TODO use this axios to send tokens
+    // TODO use this axios to send tokens (maybe look into modularizing this logic)
     const authAxios = axios.create({
         baseURL: 'http://localhost:8080/technology-project',
         headers:{
             'Accept':'application/json',
-            'Authorization': `${props.currentUser?.token}`
         },
         //prevents Axios from throwing an error if the response status is anything other than 200-900
         validateStatus:() => true
@@ -55,6 +54,7 @@ function LoginForm(props: ILoginProps) {
                 // add token to Principal object
                 const authUser = {...res.data, token:res.headers["authorization"]};
                 props.setCurrentUser(authUser);
+                console.log(res.headers["authorization"])
                 navigate("/dashboard");
 
             })
