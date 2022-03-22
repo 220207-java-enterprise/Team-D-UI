@@ -3,6 +3,7 @@ import {DataGrid} from '@mui/x-data-grid';
 import axios from 'axios';
 import { Principal } from '../models/principal';
 import { appClient } from '../remote/app-client';
+import { createStyles, makeStyles } from '@mui/material';
 
 interface IDataGridProps{
     authUser : Principal | undefined,
@@ -30,8 +31,8 @@ function DataGridforAdmin(props: IDataGridProps){
         authAxios
             .get("/users")
             .then((res)=> {
-            console.log(res);
-            setData(res.data);
+            console.log(res.data.providedValues);
+            setData(res.data.providedValues);
             })
             .catch((err)=>{
                 console.log(err);
@@ -41,31 +42,49 @@ function DataGridforAdmin(props: IDataGridProps){
     useEffect(()=> {
         getUserData();
     }, [])
-    
+
     const columns = [
-        {field: "user_id", headerName:"ID", width:90},
-        {field: "given_name", headerName:"First Name", width:90},
-        {field: "surname", headerName:"Last Name", width:90},
-        {field: "email", headerName:"Email", width:90},
-        {field: "active", headerName:"Is Active?", width:90},   
+        {field: "userId", headerName:"ID", width:100},
+        {field: "firstName", headerName:"First Name", width:200},
+        {field: "lastName", headerName:"Last Name", width:200},
+        {field: "email", headerName:"Email", width:200},
+        {field: "isActive", headerName:"Is Active?", width:100},
+        {field: "role", headerName:"Role", width:180},
     ]
 
-    // const rows = data.map((row=> ({
-    //     userId: row["user_id"],
-    //     firstName: row["given_name"],
-    //     lastName: row["surname"],
-    //     email: row["email"],
-    //     isActive: row["active"]
-    // })));
+    const rows = data.map((row=> ({
+        userId: row["user_id"],
+        firstName: row["given_name"],
+        lastName: row["surname"],
+        email: row["email"],
+        isActive: row["active"],
+        role: row["role"]
+    })));
                         
     return (
-        <div style={{height: "500px"}}>
-            {/* <DataGrid 
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-            /> */}
+        <div className='white-text container' /*style={{height: "500px"}}*/> All Users
+            {
+                <DataGrid
+                    sx={{
+                        width: '100%',
+                        color:'black',
+                        backgroundColor: 'whitesmoke',
+                        display:'in-line',
+                        justifyContent:'space-between',
+                        borderRadius: 2,
+                        boxShadow: 2,
+                        border: 2,
+                        borderColor: 'whitesmoke', '& .MuiDataGrid-cell:hover': {color: 'purple',},
+                    }}
+                    getRowId={(row) => row.userId}
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[10]}
+                    autoHeight={true}
+                    paginationMode='client'
+                />
+            }
         </div>
     )
 }
