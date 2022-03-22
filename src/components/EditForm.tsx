@@ -15,17 +15,10 @@ interface IDataGridProps{
 function EditForm(props: IDataGridProps) {
     const [formInfo, setFormInfo] = useState({
         userId: props.gridRowData.userId,
-        password: "",
+        password: null,
         role: props.gridRowData.role,
         active: props.gridRowData.isActive,
     });
-
-    console.log(props.gridRowData);
-
-    console.log("TOKEN", props.principal?.token);
-
-    // console.log("GRID ROW DATA: ", gridRowData.gridRowData);
-    // console.log("TOKEN", principal);
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -55,7 +48,7 @@ function EditForm(props: IDataGridProps) {
     useEffect(()=> {
         setFormInfo({
             userId: props.gridRowData.userId,
-            password: "",
+            password: null,
             role: props.gridRowData.role,
             active: props.gridRowData.isActive
         }
@@ -80,8 +73,7 @@ function EditForm(props: IDataGridProps) {
                             <label className="white-text">Change Password:</label>
                             <input
                                 name="password" 
-                                type="text"  
-                                value={formInfo.password}
+                                type="text" 
                                 placeholder="edit password..." 
                                 className="form-control" 
                                 onChange={changeHandler}
