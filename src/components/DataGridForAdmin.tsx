@@ -4,15 +4,17 @@ import axios from 'axios';
 import { Principal } from '../models/principal';
 import { appClient } from '../remote/app-client';
 import { createStyles, makeStyles } from '@mui/material';
+import EditForm from './EditForm';
 
 interface IDataGridProps{
     authUser : Principal | undefined,
 }
 
 
-function DataGridforAdmin(props: IDataGridProps){
+function DataGridForAdmin(props: IDataGridProps){
 
     const[data, setData] = useState([]);
+    const[gridRowData, setGridRowData] = useState(null);
 
     // TODO use this axios to send tokens
     const authAxios = axios.create({
@@ -43,6 +45,12 @@ function DataGridforAdmin(props: IDataGridProps){
         getUserData();
     }, [])
 
+
+    const handleOnCellClick = (rowData:any) => {
+        console.log(rowData);
+        setGridRowData(rowData);
+      };
+
     const columns = [
         {field: "userId", headerName:"ID", width:100},
         {field: "firstName", headerName:"First Name", width:200},
@@ -58,7 +66,7 @@ function DataGridforAdmin(props: IDataGridProps){
         lastName: row["surname"],
         email: row["email"],
         isActive: row["active"],
-        role: row["role"]
+        role: row["role"],
     })));
                         
     return (
@@ -83,10 +91,14 @@ function DataGridforAdmin(props: IDataGridProps){
                     rowsPerPageOptions={[10]}
                     autoHeight={true}
                     paginationMode='client'
+                    onCellClick={(getRowId)=>{handleOnCellClick(getRowId.row)}}
                 />
+
             }
+            {gridRowData?
+             <EditForm gridRowData={gridRowData} principal={props.authUser}/> : <></>}
         </div>
     )
 }
 
-export default DataGridforAdmin;
+export default DataGridForAdmin;

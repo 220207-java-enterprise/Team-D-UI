@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Principal } from '../models/principal';
 import '../styles/styles.css'
-import DataGridforAdmin from './DataGridAdmin';
-import ErrorMessage from "./ErrorMessage";
-import {logout} from "../remote/auth-service"
+import DataGridforAdmin from './DataGridForAdmin';
 
 interface IDashboardProps{
     currentUser : Principal | undefined,

@@ -48,15 +48,16 @@ function LoginForm(props: ILoginProps) {
                     console.log(res.data);
                     setErrorMsg(res.data.message);
                 } 
-
-                // store token to local storage
-                window.localStorage.setItem("token", res.headers["authorization"]);
-                // add token to Principal object
-                const authUser = {...res.data, token:res.headers["authorization"]};
-                props.setCurrentUser(authUser);
-                console.log(res.headers["authorization"])
-                navigate("/dashboard");
-
+                console.log(res);
+                if (res.status===201){
+                    // store token to local storage
+                    window.localStorage.setItem("token", res.headers["authorization"]);
+                    // add token to Principal object
+                    const authUser = {...res.data, token:res.headers["authorization"]};
+                    props.setCurrentUser(authUser);
+                    console.log(res.headers["authorization"])
+                    navigate("/dashboard");
+                }
             })
             .catch((err)=>{
                 console.log(err);
