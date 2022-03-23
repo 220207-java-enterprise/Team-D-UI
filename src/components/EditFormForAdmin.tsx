@@ -7,7 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 
 interface IDataGridProps{
     refresh: boolean | undefined,
-    setRefresh: (refleshPage: any | undefined) => void
+    setRefresh: (refreshPage: any | undefined) => void
     gridRowData: any | undefined,
     principal : Principal | undefined,
     setGridRowData: (RemoveRowData: any | undefined) => void

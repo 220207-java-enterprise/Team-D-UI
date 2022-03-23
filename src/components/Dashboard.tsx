@@ -38,7 +38,7 @@ function Dashboard(props: IDashboardProps){
                 onClick={showCreateForm}
                 >Create</button>: ""}
             {createMode? 
-            <CreateReimbursementForm setCreateMode={setCreateMode}/>: ""}
+            <CreateReimbursementForm setCreateMode={setCreateMode} createMode={undefined}/>: ""}
         </div>
     )
 }
