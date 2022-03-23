@@ -7,13 +7,10 @@ import '../styles/styles.css'
 import ErrorMessage from "./ErrorMessage";
 
 interface ICreateReimbursementFormProps {
-    createMode : boolean | undefined,
     setCreateMode: (createForm: any | undefined) => void
 }
 
 function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
-
-
 
     const [formInfo, setFormInfo] = useState({
         amount: 0,
@@ -30,7 +27,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
 
     return (
         <div className="background">
-        <h1 className="page-heading pt-5">Register Form</h1>
+        <h1>Enter Reimbursement Details:</h1>
         <form
             className="container d-flex justify-content-around"
             // onSubmit={submitHandler}
@@ -89,7 +86,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
                     className="btn-lg btn-primary" 
                     type="submit"
                     value="Create"
-                    onClick= { props.setCreateMode(!props.createMode);}
+                    //onClick= { props.setCreateMode(!props.createMode)}
                 />
             </div>                
         </form>

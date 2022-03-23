@@ -13,6 +13,12 @@ function Dashboard(props: IDashboardProps){
 
     const[createMode, setCreateMode] = useState<boolean>(false);
 
+    function showCreateForm(){
+        console.log("state changed!")
+        setCreateMode(true);
+    }
+
+
     return(
         !props.currentUser ? <>Login Required!</> :
         <div className="background">
@@ -25,15 +31,14 @@ function Dashboard(props: IDashboardProps){
                 <p>{props.currentUser.token}</p>
             </div>
             <DataGridTable authUser={props.currentUser}/>
-            {props.currentUser.role == "EMPLOYEE" ? <input 
-                                                    className="btn-lg btn-primary" 
-                                                    type="submit"
-                                                    value="Create"
-                                                    onSubmit=
-                                            /> : ""}
+            {props.currentUser.role == "EMPLOYEE" ?
+                <button 
+                className="btn-lg btn-primary" 
+                type="submit"
+                onClick={showCreateForm}
+                >Create</button>: ""}
             {createMode? 
-            <CreateReimbursementForm 
-            createMode={createMode} setCreateMode={setCreateMode}/>: ""}
+            <CreateReimbursementForm setCreateMode={setCreateMode}/>: ""}
         </div>
     )
 }
