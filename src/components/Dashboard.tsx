@@ -8,10 +8,12 @@ import { Link,useNavigate } from "react-router-dom";
 
 interface IDashboardProps{
     currentUser : Principal | undefined,
+    setCurrentUser: (nextUser: Principal | undefined) => void
 }
 
 function Dashboard(props: IDashboardProps){
     let [authUser, setAuthUser] = useState<Principal>();
+    
     console.log(props.currentUser);
 
     const [cookies, setCookie, removeCookie] = useCookies(["principal"]);
@@ -22,11 +24,17 @@ function Dashboard(props: IDashboardProps){
     }
     const navigate = useNavigate();
 
+
+    useEffect(()=> {
+        !cookies.principal? navigate('/login'): props.setCurrentUser(cookies.principal)
+    }, []);
+
     return(
+        
         !props.currentUser ? <>Login Required!</> :
         <div className="background">
 
-<header><button onClick={handle}>Remove Cookie</button></header>
+<header><button onClick={handle}>Log Out</button></header>
             <h1 className="page-heading pt-5">Dashboard</h1>
             <div className="container white-text">
                 <h3>Welcome, {props.currentUser.username} </h3>
