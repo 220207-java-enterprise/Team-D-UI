@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { Principal } from "../models/principal";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
+import { useCookies} from 'react-cookie';
 
 interface ILoginProps{
     currentUser: Principal | undefined,
@@ -10,6 +11,7 @@ interface ILoginProps{
 }
 
 function LoginForm(props: ILoginProps) {
+    const [cookies, setCookie] = useCookies(["principal"]);
 
     const [formInfo, setFormInfo] = useState({
         username:"",
@@ -50,12 +52,13 @@ function LoginForm(props: ILoginProps) {
                 } 
                 console.log(res);
                 if (res.status===201){
-                    // store token to local storage
-                    window.localStorage.setItem("token", res.headers["authorization"]);
+                    // // store token to local storage
+                    // window.localStorage.setItem("token", res.headers["authorization"]);
                     // add token to Principal object
                     const authUser = {...res.data, token:res.headers["authorization"]};
                     props.setCurrentUser(authUser);
-                    console.log(res.headers["authorization"])
+                    console.log(res.headers["authorization"]);
+                    setCookie("principal", authUser, {path: "/"});
                     navigate("/dashboard");
                 }
             })
@@ -101,7 +104,7 @@ function LoginForm(props: ILoginProps) {
                     className="btn-lg btn-primary" 
                     type="submit"
                     value="Login"
-                />
+                />          
             </div>                
         </form>
 
