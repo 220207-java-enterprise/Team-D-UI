@@ -57,7 +57,7 @@ function DataGridForAdmin(props: IDataGridProps){
         {field: "lastName", headerName:"Last Name", width:200},
         {field: "email", headerName:"Email", width:300},
         {field: "role", headerName:"Role", width:180},
-        {field: "isActive", headerName:"Is Active?", width:100, type: 'boolean'},
+        {field: "isActive", headerName:"Is Active?", width:180, type: 'boolean'},
     ]
 
     const rows = data.map((row=> ({
