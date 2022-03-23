@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Principal } from '../models/principal';
 import { findAllPendingByEmployee, findAllPendingByFM, findAllReimbsByFM } from '../remote/reimb-service';
 import {DataGrid} from '@mui/x-data-grid';
@@ -13,6 +13,7 @@ interface IDataGridProps{
 function DataGridTable (props: IDataGridProps){    
     const[data, setData] = useState([]);
     const[gridRowData, setGridRowData] = useState(null);
+    const[refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(()=>{
         // let resp = await authenticate({username, password});
@@ -42,7 +43,7 @@ function DataGridTable (props: IDataGridProps){
             });
         }   
         
-    },[props])
+    },[props, refresh])
 
     
     const handleOnCellClick = (rowData:any) => {
@@ -160,7 +161,7 @@ function DataGridTable (props: IDataGridProps){
             
 
             {(gridRowData && props.authUser?.role==="ADMIN") ?
-                <EditFormForAdmin setData={setData} gridRowData={gridRowData} principal={props.authUser}/> : 
+                <EditFormForAdmin refresh={refresh} setRefresh={setRefresh} gridRowData={gridRowData} setGridRowData={setGridRowData} principal={props.authUser}/> : 
                 <>
                 {(gridRowData && props.authUser?.role==="FINANCE MANAGER") ?
                 <EditFormForFM gridRowData={gridRowData} principal={props.authUser}/>:<>

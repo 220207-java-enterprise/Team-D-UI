@@ -1,29 +1,29 @@
 import axios from "axios";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Principal } from "../models/principal";
-import { appClient } from "../remote/app-client";
+import { updateUser } from "../remote/user-service";
 import '../styles/styles.css'
 import ErrorMessage from "./ErrorMessage";
 
 interface IDataGridProps{
-    gridRowData : any | undefined,
+    refresh: boolean | undefined,
+    setRefresh: (refleshPage: any | undefined) => void
+    gridRowData: any | undefined,
     principal : Principal | undefined,
-    setData: (newUserData: any | undefined) => void
+    setGridRowData: (RemoveRowData: any | undefined) => void
 }
 
 function EditForm(props: IDataGridProps) {
     const [formInfo, setFormInfo] = useState({
-        userId: props.gridRowData.userId,
+        userId: props.gridRowData.Id,
         password: null,
         role: props.gridRowData.role,
         active: props.gridRowData.isActive,
     });
 
-    console.log(props.gridRowData);
+    //console.log(props.gridRowData);
 
-    console.log("TOKEN", props.principal?.token);
+    //console.log("TOKEN", props.principal?.token);
 
     // console.log("GRID ROW DATA: ", gridRowData.gridRowData);
     // console.log("TOKEN", principal);
@@ -39,24 +39,32 @@ function EditForm(props: IDataGridProps) {
 
     const submitHandler=(e:SyntheticEvent)=>{
         e.preventDefault();
-        appClient
-            .put("/users", formInfo, {headers:{'Authorization': props.principal?.token!}})
-            .then((res) => {
-                if (res.data.status===400){
-                    console.log(res.data)
-                    setErrorMsg(res.data.message)
-                } else{
-                    console.log(res)
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-              });
+        // appClient
+        //     .put("/users", formInfo, {headers:{'Authorization': props.principal?.token!}})
+        //     .then((res) => {
+        //         if (res.data.status===400){
+        //             console.log(res.data)
+        //             setErrorMsg(res.data.message)
+        //         } else{
+        //             console.log(res)
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //       });
+        console.log(formInfo);
+        
+        updateUser(props.principal?.token, formInfo).then((res)=>{
+            console.log(res);
+            //setRefresh(!props.reflesh!);
+            props.setRefresh(!props.refresh);
+            props.setGridRowData(null);
+        })
     }
 
     useEffect(()=> {
         setFormInfo({
-            userId: props.gridRowData.userId,
+            userId: props.gridRowData.Id,
             password: null,
             role: props.gridRowData.role,
             active: props.gridRowData.isActive
