@@ -10,12 +10,13 @@ import ErrorMessage from "./ErrorMessage";
 interface IDataGridProps{
     gridRowData : any | undefined,
     principal : Principal | undefined,
+    setData: (newUserData: any | undefined) => void
 }
 
 function EditForm(props: IDataGridProps) {
     const [formInfo, setFormInfo] = useState({
         userId: props.gridRowData.userId,
-        password: "",
+        password: null,
         role: props.gridRowData.role,
         active: props.gridRowData.isActive,
     });
@@ -52,10 +53,11 @@ function EditForm(props: IDataGridProps) {
                 console.log(err);
               });
     }
+
     useEffect(()=> {
         setFormInfo({
             userId: props.gridRowData.userId,
-            password: "",
+            password: null,
             role: props.gridRowData.role,
             active: props.gridRowData.isActive
         }
@@ -81,7 +83,6 @@ function EditForm(props: IDataGridProps) {
                             <input
                                 name="password" 
                                 type="text"  
-                                value={formInfo.password}
                                 placeholder="edit password..." 
                                 className="form-control" 
                                 onChange={changeHandler}

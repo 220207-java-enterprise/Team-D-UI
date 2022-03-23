@@ -17,3 +17,11 @@ export const updateUser = () => {
 export const activateUser = (userId: string) => {
     
 }
+
+export const findAllUsers = async (token:string | undefined) => {
+    return await appClient.get('/users', {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
