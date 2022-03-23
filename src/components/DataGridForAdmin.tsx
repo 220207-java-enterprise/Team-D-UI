@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
+import {DataGrid, GridFilterModel, GridLinkOperator} from '@mui/x-data-grid';
 import axios from 'axios';
 import { Principal } from '../models/principal';
 import { appClient } from '../remote/app-client';
@@ -56,8 +56,8 @@ function DataGridForAdmin(props: IDataGridProps){
         {field: "firstName", headerName:"First Name", width:200},
         {field: "lastName", headerName:"Last Name", width:200},
         {field: "email", headerName:"Email", width:300},
-        {field: "isActive", headerName:"Is Active?", width:100},
         {field: "role", headerName:"Role", width:180},
+        {field: "isActive", headerName:"Is Active?", width:100, type: 'boolean'},
     ]
 
     const rows = data.map((row=> ({
