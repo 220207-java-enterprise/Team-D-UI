@@ -3,11 +3,14 @@ import React, {SyntheticEvent, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { appClient } from "../remote/app-client";
+import { createNewReimbursement } from "../remote/reimb-service";
 import '../styles/styles.css'
 import ErrorMessage from "./ErrorMessage";
+import { Principal } from '../models/principal'
 
 interface ICreateReimbursementFormProps {
-    createMode : boolean | undefined,
+    principal : Principal | undefined,
+    //createMode : boolean | undefined,
     setCreateMode: (createForm: any | undefined) => void
 }
 
@@ -16,7 +19,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
 
 
     const [formInfo, setFormInfo] = useState({
-        amount: 0,
+        amount: "",
         description: "",
         reimbursementType: "OTHER",
         receipt: null
@@ -35,20 +38,35 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
         console.log(formInfo);
     }
 
+   
+    const submitHandler=(e:SyntheticEvent)=>{
+        e.preventDefault();
+        console.log(formInfo);
+        
+        createNewReimbursement(props.principal?.token, formInfo).then((res)=>{
+            if(res.status != 201) {
+                setErrorMsg("You did a bad thing")
+                return
+            }
+            console.log(res);
+            props.setCreateMode(false);
+        })
+    } 
+
 
     return (
         <div className="background">
         <h1 className="page-heading pt-5">Register Form</h1>
         <form
             className="container d-flex justify-content-around"
-            //onSubmit={submitHandler}
+            onSubmit={submitHandler}
         >
 
             <div className="justify-content-center">
                 <div className="form-group m-3">
                     <input 
                         name="amount"
-                        type="number" 
+                        type="text" 
                         required
                         value={formInfo.amount}
                         placeholder="enter amount..." 

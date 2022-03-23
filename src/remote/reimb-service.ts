@@ -26,3 +26,11 @@ export const findAllPendingByEmployee = async (token:string | undefined) => {
         }
     });
 }
+
+export const createNewReimbursement = async (token: string | undefined, body: object | undefined) => {
+    return await appClient.post('/reimbursements/employee/reimbursement', body, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
