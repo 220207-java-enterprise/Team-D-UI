@@ -55,7 +55,7 @@ function DataGridForAdmin(props: IDataGridProps){
         {field: "userId", headerName:"ID", width:100},
         {field: "firstName", headerName:"First Name", width:200},
         {field: "lastName", headerName:"Last Name", width:200},
-        {field: "email", headerName:"Email", width:200},
+        {field: "email", headerName:"Email", width:300},
         {field: "isActive", headerName:"Is Active?", width:100},
         {field: "role", headerName:"Role", width:180},
     ]
