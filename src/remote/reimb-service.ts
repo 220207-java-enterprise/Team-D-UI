@@ -34,3 +34,16 @@ export const createNewReimbursement = async (token: string | undefined, body: ob
         }
     });
 }
+
+export const updateReimbursement = async (token: string | undefined, body: object | undefined) => {
+    return await appClient.put('employee/reimbursement', body, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
+
+export const deleteReimbursement = async (token: string | undefined, body: object | undefined) => {
+    return await appClient.delete('employee/reimbursement',
+        { data: body, headers: { 'Authorization': `${token}` } })
+}

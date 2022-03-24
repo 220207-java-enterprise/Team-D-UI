@@ -13,7 +13,7 @@ interface IDataGridProps{
     setGridRowData: (RemoveRowData: any | undefined) => void
 }
 
-function EditForm(props: IDataGridProps) {
+function EditFormForAdmin(props: IDataGridProps) {
     const [formInfo, setFormInfo] = useState({
         userId: props.gridRowData.Id,
         password: null,
@@ -118,4 +118,4 @@ function EditForm(props: IDataGridProps) {
       );
     }
     
-    export default EditForm;
+    export default EditFormForAdmin;
