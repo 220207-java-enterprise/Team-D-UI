@@ -1,31 +1,25 @@
-import axios from "axios";
-import React, {SyntheticEvent, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { appClient } from "../remote/app-client";
-import { createNewReimbursement } from "../remote/reimb-service";
-import '../styles/styles.css'
+import { Principal } from "../models/principal";
+import React, {SyntheticEvent, useEffect, useState} from "react";
+import {deleteReimbursement, updateReimbursement} from "../remote/reimb-service"
 import ErrorMessage from "./ErrorMessage";
-import { Principal } from '../models/principal'
 
-interface ICreateReimbursementFormProps {
+interface IDataGridProps{
+    refresh: boolean | undefined,
+    setRefresh: (refreshPage: any | undefined) => void
+    gridRowData : any | undefined,
     principal : Principal | undefined,
-    //createMode : boolean | undefined,
-    setCreateMode: (createForm: any | undefined) => void
+    setGridRowData: (RemoveRowData: any | undefined) => void
 }
 
-function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
-
-
+function EditFormForEmployee(props: IDataGridProps) {
 
     const [formInfo, setFormInfo] = useState({
-        amount: "",
-        description: "",
-        reimbursementType: "LODGING",
-        receipt: null
+        reimbursementId: props.gridRowData.Id,
+        amount: props.gridRowData.amount,
+        description: props.gridRowData.description,
+        reimbursementType: props.gridRowData.type,
+        receipt: null,
     });
-
-  
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -34,33 +28,46 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
             ...formInfo,
             [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
         });
-
-        console.log(formInfo);
     }
 
-   
-    const submitHandler=(e:SyntheticEvent)=>{
+    const editHandler=(e:SyntheticEvent)=>{
         e.preventDefault();
-        console.log(formInfo);
         
-        createNewReimbursement(props.principal?.token, formInfo).then((res)=>{
-            if(res.status != 201) {
-                setErrorMsg("You did a bad thing")
-                return
-            }
+        updateReimbursement(props.principal?.token, formInfo).then((res)=>{
             console.log(res);
-            props.setCreateMode(false);
+            props.setRefresh(!props.refresh);
+            props.setGridRowData(null);
         })
-    } 
+    }
+
+    const recallHandler=(e:SyntheticEvent)=>{
+        e.preventDefault();
+        
+        deleteReimbursement(props.principal?.token, {id: props.gridRowData.Id}).then((res)=>{
+            console.log(res);
+            props.setRefresh(!props.refresh);
+            props.setGridRowData(null);
+        })
+    }
+
+    useEffect(()=> {
+        setFormInfo({
+            reimbursementId: props.gridRowData.Id,
+            amount: props.gridRowData.amount,
+            description: props.gridRowData.description,
+            reimbursementType: props.gridRowData.type,
+            receipt: null,
+        }
+        )
+    }, [props])
 
 
-    return (
-
-        <div className="mt-3">
+    return(
+<div className="mt-3">
         <form
-            onSubmit={submitHandler}
+            onSubmit={editHandler}
         >
-            <h3 className="white-text">New Reimbursement Form</h3>
+            <h3 className="white-text">Edit Reimbursement Form</h3>
             <div className="d-flex justify-content-center">
                 <div className="form-group m-3">
                 <label className="white-text">Amount:</label>
@@ -111,12 +118,15 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
                 </div>
             </div>    
             <input
-                    className="btn-lg btn-primary" 
+                    className="btn-lg btn-warning" 
                     type="submit"
-                    value="Create"
+                    value="Update"
                 />            
         </form>
 
+        {props.gridRowData.status==="PENDING"? 
+        <button onClick={recallHandler} className="btn btn-primary m-3">Recall Reimbursement</button>:
+        <></>}
         {errorMsg? <ErrorMessage errorMessage={errorMsg}/> : <></>}
       </div>
 
@@ -124,4 +134,4 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
 
 }
 
-export default CreateReimbursementForm;
+export default EditFormForEmployee;

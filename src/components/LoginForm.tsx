@@ -71,7 +71,7 @@ function LoginForm(props: ILoginProps) {
         <div className="background">
         <h1 className="page-heading pt-5">Login Form</h1>
         <form
-            className="container d-flex justify-content-around"
+            className="container d-flex justify-content-around mb-3"
             onSubmit={submitHandler}
         >
 

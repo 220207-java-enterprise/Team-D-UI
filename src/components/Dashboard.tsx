@@ -47,25 +47,21 @@ function Dashboard(props: IDashboardProps){
         !props.currentUser ? <>Login Required!</> :
         <div className="background">
 
+            <button className='btn btn-danger m-5 float-end' onClick={handle}>Logout</button>
+            {props.currentUser.role == "EMPLOYEE" ?
+                <button 
+                className="btn btn-success m-5 float-end" 
+                type="submit"
+                onClick={showCreateForm}
+                >Create</button>: ""
+            }
 
-<header><button onClick={handle}>Log Out</button></header>
-            
-            <h1 className="page-heading pt-5">Dashboard</h1>
-            <div className="container white-text">
-                <h3>Welcome, {props.currentUser.username}</h3>
-               
-                <h4>{props.currentUser.role} #{props.currentUser.id}</h4>
-                <p>{props.currentUser.token}</p>
-                
+            <div className="container white-text pt-5 pb-5">
+                <h3 className='pt-5'>Welcome, {props.currentUser.username}</h3>
+                <p>{props.currentUser.role}</p>   
             </div>
 
             <DataGridTable authUser={props.currentUser}/>
-            {props.currentUser.role == "EMPLOYEE" ?
-                <button 
-                className="btn-lg btn-primary" 
-                type="submit"
-                onClick={showCreateForm}
-                >Create</button>: ""}
             {createMode? 
             <CreateReimbursementForm setCreateMode={setCreateMode} principal={props.currentUser}  />: ""}
 

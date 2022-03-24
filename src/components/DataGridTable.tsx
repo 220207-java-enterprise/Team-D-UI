@@ -4,6 +4,7 @@ import { findAllPendingByEmployee, findAllPendingByFM, findAllReimbsByFM } from 
 import {DataGrid} from '@mui/x-data-grid';
 import EditFormForFM from './EditFormForFM';
 import EditFormForAdmin from "./EditFormForAdmin";
+import EditFormForEmployee from './EditFormForEmployee';
 import { findAllUsers } from '../remote/user-service';
 
 interface IDataGridProps{
@@ -38,7 +39,6 @@ function DataGridTable (props: IDataGridProps){
             });
         }else if (props.authUser?.role==="EMPLOYEE"){
             findAllPendingByEmployee(props.authUser?.token).then((res)=>{
-                console.log("EMPLOYEE", res.data);
                 setData(res.data);
             });
         }   
@@ -149,7 +149,7 @@ function DataGridTable (props: IDataGridProps){
                     getRowId={(row) => row.Id}
                     rows={rows[props.authUser.role]}
                     columns={columns[props.authUser.role]}
-                    pageSize={5}
+                    pageSize={6}
                     rowsPerPageOptions={[10]}
                     autoHeight={true}
                     paginationMode='client'
@@ -159,14 +159,30 @@ function DataGridTable (props: IDataGridProps){
             </>:<>
             </>}
             
-
+            {/* if */}
             {(gridRowData && props.authUser?.role==="ADMIN") ?
-                <EditFormForAdmin refresh={refresh} setRefresh={setRefresh} gridRowData={gridRowData} setGridRowData={setGridRowData} principal={props.authUser}/> : 
-                <>
-                {(gridRowData && props.authUser?.role==="FINANCE MANAGER") ?
-                <EditFormForFM refresh={refresh} setRefresh={setRefresh} gridRowData={gridRowData} setGridRowData={setGridRowData} principal={props.authUser} />:<>
-                </>}
-                </>
+                <EditFormForAdmin 
+                    refresh={refresh} 
+                    setRefresh={setRefresh} 
+                    gridRowData={gridRowData} 
+                    setGridRowData={setGridRowData} 
+                    principal={props.authUser}/> : 
+            // elseif
+            (gridRowData && props.authUser?.role==="FINANCE MANAGER") ?
+                <EditFormForFM 
+                    gridRowData={gridRowData} 
+                    principal={props.authUser}/>:
+                    
+            (gridRowData && props.authUser?.role==="EMPLOYEE") ?
+                <EditFormForEmployee 
+                    refresh={refresh}
+                    setRefresh={setRefresh} 
+                    gridRowData={gridRowData}
+                    setGridRowData={setGridRowData} 
+                    principal={props.authUser}
+                />
+            :<></>
+
             }
         </div>
     )
