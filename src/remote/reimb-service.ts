@@ -36,7 +36,7 @@ export const createNewReimbursement = async (token: string | undefined, body: ob
 }
 
 export const updateReimbursement = async (token: string | undefined, body: object | undefined) => {
-    return await appClient.put('reimbursements/employee/reimbursement', body, {
+    return await appClient.put('/reimbursements/employee/reimbursement', body, {
         headers: {
             'Authorization': `${token}`
         }
@@ -44,6 +44,6 @@ export const updateReimbursement = async (token: string | undefined, body: objec
 }
 
 export const deleteReimbursement = async (token: string | undefined, body: object | undefined) => {
-    return await appClient.delete('employee/reimbursement',
+    return await appClient.delete('/reimbursements/employee/recall-pending-reimbursement',
         { data: body, headers: { 'Authorization': `${token}` } })
 }

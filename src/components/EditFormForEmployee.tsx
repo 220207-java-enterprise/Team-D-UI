@@ -34,7 +34,6 @@ function EditFormForEmployee(props: IDataGridProps) {
         e.preventDefault();
         
         updateReimbursement(props.principal?.token, formInfo).then((res)=>{
-            console.log("HERE!")
             console.log(res);
             props.setRefresh(!props.refresh);
             props.setGridRowData(null);
@@ -44,7 +43,7 @@ function EditFormForEmployee(props: IDataGridProps) {
     const recallHandler=(e:SyntheticEvent)=>{
         e.preventDefault();
         
-        deleteReimbursement(props.principal?.token, formInfo).then((res)=>{
+        deleteReimbursement(props.principal?.token, {id: props.gridRowData.Id}).then((res)=>{
             console.log(res);
             props.setRefresh(!props.refresh);
             props.setGridRowData(null);
