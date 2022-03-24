@@ -182,6 +182,7 @@ function DataGridTable (props: IDataGridProps){
                     principal={props.authUser}
                 />
             :<></>
+
             }
         </div>
     )

@@ -1,3 +1,4 @@
+import { BackdropProps } from "@mui/material";
 import { appClient } from "./app-client";
 
 
@@ -11,6 +12,22 @@ export const findAllPendingByFM = async (token:string | undefined) => {
 
 export const findAllReimbsByFM = async (token:string | undefined) => {
     return await appClient.get('/reimbursements/find-all-reimbursements-by-finance-manager', {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
+
+export const ApproveReimbsByFM = async (token:string | undefined, ApproveOrDeny:{reimbursementId:string|undefined, approve:boolean|undefined }) => {
+    return await appClient.put(`/reimbursements/approve-or-deny/${ApproveOrDeny.reimbursementId}`, ApproveOrDeny, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
+
+export const DenyReimbsByFM = async (token:string | undefined, ApproveOrDeny:{reimbursementId:string|undefined, approve:boolean|undefined }) => {
+    return await appClient.put(`/reimbursements/approve-or-deny/${ApproveOrDeny.reimbursementId}`, ApproveOrDeny, {
         headers: {
             'Authorization': `${token}`
         }
