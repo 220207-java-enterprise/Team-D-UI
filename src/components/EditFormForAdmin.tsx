@@ -1,24 +1,26 @@
 import axios from "axios";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Principal } from "../models/principal";
-import { appClient } from "../remote/app-client";
+import { updateUser } from "../remote/user-service";
 import '../styles/styles.css'
 import ErrorMessage from "./ErrorMessage";
 
 interface IDataGridProps{
-    gridRowData : any | undefined,
+    refresh: boolean | undefined,
+    setRefresh: (refreshPage: any | undefined) => void
+    gridRowData: any | undefined,
     principal : Principal | undefined,
+    setGridRowData: (RemoveRowData: any | undefined) => void
 }
 
 function EditForm(props: IDataGridProps) {
     const [formInfo, setFormInfo] = useState({
-        userId: props.gridRowData.userId,
+        userId: props.gridRowData.Id,
         password: null,
         role: props.gridRowData.role,
         active: props.gridRowData.isActive,
     });
+
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -31,23 +33,19 @@ function EditForm(props: IDataGridProps) {
 
     const submitHandler=(e:SyntheticEvent)=>{
         e.preventDefault();
-        appClient
-            .put("/users", formInfo, {headers:{'Authorization': props.principal?.token!}})
-            .then((res) => {
-                if (res.data.status===400){
-                    console.log(res.data)
-                    setErrorMsg(res.data.message)
-                } else{
-                    console.log(res)
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-              });
+        console.log(formInfo);
+        
+        updateUser(props.principal?.token, formInfo).then((res)=>{
+            console.log(res);
+            //setRefresh(!props.reflesh!);
+            props.setRefresh(!props.refresh);
+            props.setGridRowData(null);
+        })
     }
+
     useEffect(()=> {
         setFormInfo({
-            userId: props.gridRowData.userId,
+            userId: props.gridRowData.Id,
             password: null,
             role: props.gridRowData.role,
             active: props.gridRowData.isActive
@@ -106,9 +104,7 @@ function EditForm(props: IDataGridProps) {
                                     <option selected={props.gridRowData.role === "ADMIN"} value={"ADMIN"}>ADMIN</option>
                                     <option selected={props.gridRowData.role === "FINANCE MANAGER"} value={"FINANCE MANAGER"}>FINANCE MANAGER</option>
                                     <option selected={props.gridRowData.role === "EMPLOYEE"} value={"EMPLOYEE"}>EMPLOYEE</option>
-                                {/* <option value={props.gridRowData.role}> 
-                                    {props.gridRowData.role==="FINANCE MANAGER"? "FINANCE MANAGER":"EMPLOYEE"}
-                                </option> */}
+                                
 
                             </select>
                         </div>

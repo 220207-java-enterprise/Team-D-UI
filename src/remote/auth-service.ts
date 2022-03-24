@@ -9,3 +9,4 @@ export const logout = (setCurrentUser: (nextUser:Principal | undefined)=> void)=
 export const isAuth=()=>{
     
 }
+

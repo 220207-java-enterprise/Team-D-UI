@@ -91,7 +91,7 @@ function LoginForm(props: ILoginProps) {
                 <div className="form-group m-3">
                     <input
                         name="password" 
-                        type="text" 
+                        type="password" 
                         required 
                         value={formInfo.password}
                         placeholder="enter password..." 
