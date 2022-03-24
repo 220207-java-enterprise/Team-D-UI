@@ -63,6 +63,7 @@ function EditFormForEmployee(props: IDataGridProps) {
 
 
     return(
+        props.gridRowData.status !== "PENDING"? <></>:
 <div className="mt-3">
         <form
             onSubmit={editHandler}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Principal } from '../models/principal';
-import { findAllPendingByEmployee, findAllPendingByFM, findAllReimbsByFM } from '../remote/reimb-service';
+import { findAllPendingByEmployee, findAllPendingByFM, findAllReimbsByEmployee, findAllReimbsByFM } from '../remote/reimb-service';
 import {DataGrid} from '@mui/x-data-grid';
 import EditFormForFM from './EditFormForFM';
 import EditFormForAdmin from "./EditFormForAdmin";
@@ -17,11 +17,6 @@ function DataGridTable (props: IDataGridProps){
     const[refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(()=>{
-        // let resp = await authenticate({username, password});
-        // findAllPendingByFM(props.authUser?.token).then((res)=>{
-        //     console.log(res.data);
-        //     setData(res.data);
-        // });
         if (props.authUser?.role==="ADMIN"){
             findAllUsers(props.authUser?.token).then((res)=>{
                 console.log("ADMIN", res.data.providedValues);
@@ -29,16 +24,13 @@ function DataGridTable (props: IDataGridProps){
             });
         }
         else if (props.authUser?.role==="FINANCE MANAGER" ){
-            // findAllReimbsByFM(props.authUser?.token).then((res)=>{
-            // console.log(res.data);
-            // setData(res.data);
-            // });
-            findAllPendingByFM(props.authUser?.token).then((res)=>{
+            findAllReimbsByFM(props.authUser?.token).then((res)=>{
                     console.log("FINANCE MANAGER", res.data);
                     setData(res.data);
             });
         }else if (props.authUser?.role==="EMPLOYEE"){
-            findAllPendingByEmployee(props.authUser?.token).then((res)=>{
+            findAllReimbsByEmployee(props.authUser?.token).then((res)=>{
+                console.log("EMPLOYEE", res.data);
                 setData(res.data);
             });
         }   
