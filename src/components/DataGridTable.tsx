@@ -149,7 +149,7 @@ function DataGridTable (props: IDataGridProps){
                     getRowId={(row) => row.Id}
                     rows={rows[props.authUser.role]}
                     columns={columns[props.authUser.role]}
-                    pageSize={5}
+                    pageSize={6}
                     rowsPerPageOptions={[10]}
                     autoHeight={true}
                     paginationMode='client'

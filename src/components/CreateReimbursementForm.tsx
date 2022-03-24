@@ -21,7 +21,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
     const [formInfo, setFormInfo] = useState({
         amount: "",
         description: "",
-        reimbursementType: "OTHER",
+        reimbursementType: "LODGING",
         receipt: null
     });
 
@@ -55,15 +55,15 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
 
 
     return (
-        <div className="background">
-        <h1 className="page-heading pt-5">Register Form</h1>
+
+        <div className="mt-3">
         <form
-            className="container d-flex justify-content-around"
             onSubmit={submitHandler}
         >
-
-            <div className="justify-content-center">
+            <h3 className="white-text">New Reimbursement Form</h3>
+            <div className="d-flex justify-content-center">
                 <div className="form-group m-3">
+                <label className="white-text">Amount:</label>
                     <input 
                         name="amount"
                         type="text" 
@@ -76,6 +76,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
                 </div>
 
                 <div className="form-group m-3">
+                <label className="white-text">Description:</label>
                     <input
                         name="description" 
                         type="textbox" 
@@ -87,36 +88,33 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
                     />
                 </div>
                 
-
-                
                 <div className="form-group m-3">
-                    <h3 className="white-text">Select Type:</h3>
+                <label className="white-text">Select Type:</label>
                     <select
                         name="reimbursementType" 
                         onChange={changeHandler} 
                         id="type-select" 
-                        className="form-select form-select-lg">
+                        className="form-select form-select-">
                         <option value="LODGING"> 
-                            Lodging 
+                            LODGING 
                         </option>
                         <option value="TRAVEL">
-                            Travel
+                            TRAVEL
                         </option>
                         <option value="FOOD">
-                            Food
+                            FOOD
                         </option>
                         <option value="OTHER">
-                            Other
+                            OTHER
                         </option>
                     </select>
                 </div>
-
-                <input
+            </div>    
+            <input
                     className="btn-lg btn-primary" 
                     type="submit"
                     value="Create"
-                />
-            </div>                
+                />            
         </form>
 
         {errorMsg? <ErrorMessage errorMessage={errorMsg}/> : <></>}

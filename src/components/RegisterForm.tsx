@@ -52,7 +52,7 @@ function RegisterForm() {
       <div className="background">
         <h1 className="page-heading pt-5">Register Form</h1>
         <form
-            className="container d-flex justify-content-around"
+            className="container d-flex justify-content-around mb-3"
             onSubmit={submitHandler}
         >
 
@@ -108,7 +108,7 @@ function RegisterForm() {
                 <div className="form-group m-3">
                     <input
                         name="password" 
-                        type="text" 
+                        type="password" 
                         required 
                         value={formInfo.password}
                         placeholder="enter password..." 

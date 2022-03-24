@@ -57,15 +57,12 @@ function EditForm(props: IDataGridProps) {
     
 
     return (
-        <div className="">
-          <h3 className="pt-5">Edit</h3>
+        <div>
           <form
-              className=""
               onSubmit={submitHandler}
           >
-              <div className="">
-              <h5 className="white-text">Making changes for {props.gridRowData.firstName} {props.gridRowData.lastName}:</h5>
-                            
+              <div>
+              <h5 className="white-text mt-3">Making changes for {props.gridRowData.firstName} {props.gridRowData.lastName}:</h5>       
                   <div className="d-flex justify-content-center">
                         <div className="form-group m-3">
                             <label className="white-text">Change Password:</label>
@@ -104,8 +101,6 @@ function EditForm(props: IDataGridProps) {
                                     <option selected={props.gridRowData.role === "ADMIN"} value={"ADMIN"}>ADMIN</option>
                                     <option selected={props.gridRowData.role === "FINANCE MANAGER"} value={"FINANCE MANAGER"}>FINANCE MANAGER</option>
                                     <option selected={props.gridRowData.role === "EMPLOYEE"} value={"EMPLOYEE"}>EMPLOYEE</option>
-                                
-
                             </select>
                         </div>
                     </div>
