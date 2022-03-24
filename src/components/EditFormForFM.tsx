@@ -29,9 +29,6 @@ function EditFormForFM(props: IDataGridProps) {
         })
     }
     return(
-        // <div style={{"backgroundColor":"gray"}}>
-        //     <p>{props.gridRowData.Id}</p>
-        // </div>
         <div className="card" style={{"backgroundColor":"gray","width":"20rem"}}>
             <div className="card-body">
                 <h5 className="card-title">Pending Reimbursement</h5>
