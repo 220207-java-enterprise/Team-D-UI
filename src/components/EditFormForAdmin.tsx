@@ -21,12 +21,6 @@ function EditForm(props: IDataGridProps) {
         active: props.gridRowData.isActive,
     });
 
-    //console.log(props.gridRowData);
-
-    //console.log("TOKEN", props.principal?.token);
-
-    // console.log("GRID ROW DATA: ", gridRowData.gridRowData);
-    // console.log("TOKEN", principal);
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -39,19 +33,6 @@ function EditForm(props: IDataGridProps) {
 
     const submitHandler=(e:SyntheticEvent)=>{
         e.preventDefault();
-        // appClient
-        //     .put("/users", formInfo, {headers:{'Authorization': props.principal?.token!}})
-        //     .then((res) => {
-        //         if (res.data.status===400){
-        //             console.log(res.data)
-        //             setErrorMsg(res.data.message)
-        //         } else{
-        //             console.log(res)
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //       });
         console.log(formInfo);
         
         updateUser(props.principal?.token, formInfo).then((res)=>{
@@ -90,7 +71,7 @@ function EditForm(props: IDataGridProps) {
                             <label className="white-text">Change Password:</label>
                             <input
                                 name="password" 
-                                type="text"  
+                                type="text" 
                                 placeholder="edit password..." 
                                 className="form-control" 
                                 onChange={changeHandler}
@@ -123,9 +104,7 @@ function EditForm(props: IDataGridProps) {
                                     <option selected={props.gridRowData.role === "ADMIN"} value={"ADMIN"}>ADMIN</option>
                                     <option selected={props.gridRowData.role === "FINANCE MANAGER"} value={"FINANCE MANAGER"}>FINANCE MANAGER</option>
                                     <option selected={props.gridRowData.role === "EMPLOYEE"} value={"EMPLOYEE"}>EMPLOYEE</option>
-                                {/* <option value={props.gridRowData.role}> 
-                                    {props.gridRowData.role==="FINANCE MANAGER"? "FINANCE MANAGER":"EMPLOYEE"}
-                                </option> */}
+                                
 
                             </select>
                         </div>
