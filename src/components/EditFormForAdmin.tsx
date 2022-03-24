@@ -10,6 +10,7 @@ import ErrorMessage from "./ErrorMessage";
 interface IDataGridProps{
     gridRowData : any | undefined,
     principal : Principal | undefined,
+    setData: (newUserData: any | undefined) => void
 }
 
 function EditForm(props: IDataGridProps) {
@@ -45,6 +46,7 @@ function EditForm(props: IDataGridProps) {
                 console.log(err);
               });
     }
+
     useEffect(()=> {
         setFormInfo({
             userId: props.gridRowData.userId,
