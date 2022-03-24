@@ -10,14 +10,15 @@ import { Principal } from './models/principal';
 function App() {
   let [authUser, setAuthUser] = useState<Principal>();
 
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginForm currentUser={authUser} setCurrentUser={setAuthUser}/>}/>
           <Route path="/register" element={<RegisterForm/>}/>
-          <Route path="/dashboard" element={<Dashboard currentUser={authUser}/>}/>
-        </Routes>
+          <Route path="/dashboard" element={<Dashboard currentUser={authUser} setCurrentUser={setAuthUser}/>}/>
+          </Routes>
       </BrowserRouter>
     </div>
   );
