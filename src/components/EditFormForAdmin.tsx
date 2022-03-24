@@ -109,7 +109,7 @@ function EditFormForAdmin(props: IDataGridProps) {
                         </div>
                     </div>
                   <input 
-                      className="btn-lg btn-warning" 
+                      className="formButton" 
                       type="submit"
                       value="Edit"
                   />

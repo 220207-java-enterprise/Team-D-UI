@@ -118,14 +118,14 @@ function EditFormForEmployee(props: IDataGridProps) {
                 </div>
             </div>    
             <input
-                    className="btn-lg btn-warning" 
+                    className="formButton m-3" 
                     type="submit"
                     value="Update"
                 />            
         </form>
 
         {props.gridRowData.status==="PENDING"? 
-        <button onClick={recallHandler} className="btn btn-primary m-3">Recall Reimbursement</button>:
+        <button onClick={recallHandler} className="formButton m-3">Recall Reimbursement</button>:
         <></>}
         {errorMsg? <ErrorMessage errorMessage={errorMsg}/> : <></>}
       </div>

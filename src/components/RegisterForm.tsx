@@ -134,7 +134,7 @@ function RegisterForm() {
                 </div>
 
                 <input 
-                    className="btn-lg btn-primary" 
+                    className="formButton" 
                     type="submit"
                     value="Register"
                 />

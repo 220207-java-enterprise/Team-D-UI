@@ -111,7 +111,7 @@ function CreateReimbursementForm(props: ICreateReimbursementFormProps) {
                 </div>
             </div>    
             <input
-                    className="btn-lg btn-primary" 
+                    className="formButton" 
                     type="submit"
                     value="Create"
                 />            
