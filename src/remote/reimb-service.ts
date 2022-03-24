@@ -36,7 +36,7 @@ export const createNewReimbursement = async (token: string | undefined, body: ob
 }
 
 export const updateReimbursement = async (token: string | undefined, body: object | undefined) => {
-    return await appClient.put('employee/reimbursement', body, {
+    return await appClient.put('reimbursements/employee/reimbursement', body, {
         headers: {
             'Authorization': `${token}`
         }

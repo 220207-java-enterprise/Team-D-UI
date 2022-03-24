@@ -14,10 +14,10 @@ interface IDataGridProps{
 function EditFormForEmployee(props: IDataGridProps) {
 
     const [formInfo, setFormInfo] = useState({
-        reimbId: props.gridRowData.Id,
+        reimbursementId: props.gridRowData.Id,
         amount: props.gridRowData.amount,
         description: props.gridRowData.description,
-        type: props.gridRowData.type,
+        reimbursementType: props.gridRowData.type,
         receipt: null,
     });
 
@@ -53,10 +53,10 @@ function EditFormForEmployee(props: IDataGridProps) {
 
     useEffect(()=> {
         setFormInfo({
-            reimbId: props.gridRowData.Id,
+            reimbursementId: props.gridRowData.Id,
             amount: props.gridRowData.amount,
             description: props.gridRowData.description,
-            type: props.gridRowData.type,
+            reimbursementType: props.gridRowData.type,
             receipt: null,
         }
         )
