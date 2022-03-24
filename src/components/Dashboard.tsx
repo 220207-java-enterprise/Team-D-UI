@@ -47,10 +47,10 @@ function Dashboard(props: IDashboardProps){
         !props.currentUser ? <>Login Required!</> :
         <div className="background">
 
-            <button className='btn btn-danger m-5 float-end' onClick={handle}>Logout</button>
+            <button className='formButton float-end m-3' onClick={handle}>Logout</button>
             {props.currentUser.role == "EMPLOYEE" ?
                 <button 
-                className="btn btn-success m-5 float-end" 
+                className="formButton float-end m-3" 
                 type="submit"
                 onClick={showCreateForm}
                 >Create</button>: ""

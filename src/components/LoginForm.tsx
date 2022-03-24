@@ -104,7 +104,7 @@ function LoginForm(props: ILoginProps) {
                 </div>
 
                 <input 
-                    className="btn-lg btn-primary" 
+                    className="formButton" 
                     type="submit"
                     value="Login"
                 />          
