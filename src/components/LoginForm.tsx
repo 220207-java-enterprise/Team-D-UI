@@ -50,6 +50,9 @@ function LoginForm(props: ILoginProps) {
                     console.log(res.data);
                     setErrorMsg(res.data.message);
                 } 
+                if (res.data.status === 500){
+                    setErrorMsg(res.data.message);
+                }
                 console.log(res);
                 if (res.status===201){
                     // // store token to local storage

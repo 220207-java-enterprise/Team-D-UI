@@ -37,7 +37,11 @@ function EditFormForAdmin(props: IDataGridProps) {
         
         updateUser(props.principal?.token, formInfo).then((res)=>{
             console.log(res);
-            //setRefresh(!props.reflesh!);
+            
+            if (res.data.status == 400){
+                setErrorMsg(res.data.message);
+                return;
+            }
             props.setRefresh(!props.refresh);
             props.setGridRowData(null);
         })
