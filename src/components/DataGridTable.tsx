@@ -169,9 +169,13 @@ function DataGridTable (props: IDataGridProps){
                     principal={props.authUser}/> : 
             // elseif
             (gridRowData && props.authUser?.role==="FINANCE MANAGER") ?
-                <EditFormForFM 
-                    gridRowData={gridRowData} 
-                    principal={props.authUser}/>:
+            <EditFormForFM 
+                refresh={refresh} 
+                setRefresh={setRefresh} 
+                gridRowData={gridRowData} 
+                setGridRowData={setGridRowData} 
+                principal={props.authUser} 
+            />:
                     
             (gridRowData && props.authUser?.role==="EMPLOYEE") ?
                 <EditFormForEmployee 
