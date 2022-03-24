@@ -29,6 +29,7 @@ function EditFormForFM(props: IDataGridProps) {
         })
     }
     return(
+        props.gridRowData.status !== "PENDING"? <></>:
         <div className="card" style={{"backgroundColor":"gray","width":"20rem"}}>
             <div className="card-body">
                 <h5 className="card-title">Pending Reimbursement</h5>

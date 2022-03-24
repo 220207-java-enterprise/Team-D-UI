@@ -11,7 +11,7 @@ export const findAllPendingByFM = async (token:string | undefined) => {
 }
 
 export const findAllReimbsByFM = async (token:string | undefined) => {
-    return await appClient.get('/reimbursements/find-all-reimbursements-by-finance-manager', {
+    return await appClient.get('/reimbursements/find-all-reimbursements', {
         headers: {
             'Authorization': `${token}`
         }
@@ -38,6 +38,13 @@ export const DenyReimbsByFM = async (token:string | undefined, ApproveOrDeny:{re
 
 export const findAllPendingByEmployee = async (token:string | undefined) => {
     return await appClient.get('/reimbursements/employee/all-pending-reimbursements', {
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
+export const findAllReimbsByEmployee = async (token:string | undefined) => {
+    return await appClient.get('/reimbursements/employee/all-reimbursements', {
         headers: {
             'Authorization': `${token}`
         }
