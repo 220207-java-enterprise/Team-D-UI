@@ -10,8 +10,12 @@ export const register = (userInfo:object) => {
     // TODO implement axios call to POST /users
 }
 
-export const updateUser = () => {
-    // TODO implement axios call to PUT /users
+export const updateUser = async (token:string | undefined, formInfo: object | undefined ) => {
+    return await appClient.put('/users',formInfo,{
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
 }
 
 export const activateUser = (userId: string) => {
