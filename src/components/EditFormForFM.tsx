@@ -30,7 +30,7 @@ function EditFormForFM(props: IDataGridProps) {
     }
     return(
         props.gridRowData.status !== "PENDING"? <></>:
-        <div className="card" style={{"backgroundColor":"gray","width":"20rem"}}>
+        <div className="background" /*style={{"backgroundColor":"gray","width":"20rem"}}*/>
             <div className="card-body">
                 <h5 className="card-title">Pending Reimbursement</h5>
                 <p className="card-text">Author: {props.gridRowData.author}</p>
@@ -38,8 +38,8 @@ function EditFormForFM(props: IDataGridProps) {
                 <p className="card-text">Description: {props.gridRowData.description}</p>
                 <p className="card-text">Submitted: {props.gridRowData.submitted}</p>
                 
-                <button className="btn btn-primary" onClick={handleApprove}>Approve</button> <b/>
-                <button className="btn btn-primary" onClick={handleDeny}>Deny</button>
+                <button className="formButton m-2" onClick={handleApprove}>Approve</button> <b/>
+                <button className="formButton m-2" onClick={handleDeny}>Deny</button>
             </div>
         </div>
     )
