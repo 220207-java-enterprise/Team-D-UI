@@ -38,6 +38,10 @@ function RegisterForm() {
                 if (res.data.status===400){
                     console.log(res.data)
                     setErrorMsg(res.data.message)
+                }
+                else if(res.data.status===409){
+                    console.log(res.data)
+                    setErrorMsg(res.data.message)
                 } else{
                     console.log(res)
                     navigate("/login")

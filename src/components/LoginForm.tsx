@@ -46,7 +46,7 @@ function LoginForm(props: ILoginProps) {
         authAxios
             .post("/auth", formInfo)
             .then((res) => {
-                if (res.data.status===400 || res.data.status===401){
+                if (res.data.status===400 || res.data.status===403){
                     console.log(res.data);
                     setErrorMsg(res.data.message);
                 } 
