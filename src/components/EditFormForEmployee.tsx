@@ -2,6 +2,7 @@ import { Principal } from "../models/principal";
 import React, {SyntheticEvent, useEffect, useState} from "react";
 import {deleteReimbursement, updateReimbursement} from "../remote/reimb-service"
 import ErrorMessage from "./ErrorMessage";
+import { responsiveProperty } from "@mui/material/styles/cssUtils";
 
 interface IDataGridProps{
     refresh: boolean | undefined,
@@ -34,6 +35,14 @@ function EditFormForEmployee(props: IDataGridProps) {
         e.preventDefault();
         
         updateReimbursement(props.principal?.token, formInfo).then((res)=>{
+            if(res.status === 500){
+                setErrorMsg("Sent bad request");
+                return;
+            }
+            if(res.status === 400){
+                setErrorMsg(res.data.message);
+                return;
+            }
             console.log(res);
             props.setRefresh(!props.refresh);
             props.setGridRowData(null);
